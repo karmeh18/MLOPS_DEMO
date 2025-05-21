@@ -70,7 +70,7 @@ def train_test_split_data(data: pd.DataFrame,test_size: int) -> tuple:
     # Example usage
 def main():
     try:
-        file_path_param=load_params('D:\Vikash_dash_Demo_Spam_MLOps\MLOPS_DEMO\config.yml')
+        file_path_param=load_params('D:\Vikash_dash_Demo_Spam_MLOps\MLOPS_DEMO\config.yaml')
 
         file_path=file_path_param["import_path"]["file_path"]
         logging.debug('File Path %s',file_path)

@@ -1,0 +1,88 @@
+schema: '2.0'
+stages:
+  data_importing:
+    cmd: uv run data_import.py
+    deps:
+    - path: config.yaml
+      hash: md5
+      md5: 1bba3ce826aa8281d7c47dee93fedb4a
+      size: 98
+    - path: data_import.py
+      hash: md5
+      md5: 6d2158cdfe09bb4d2e3948caa83f10de
+      size: 3556
+    outs:
+    - path: data/raw/
+      hash: md5
+      md5: 16317c90fd08b6af1a105608e30c4ed4.dir
+      size: 969688
+      nfiles: 3
+  preprocessing:
+    cmd: uv run preprocessing.py
+    deps:
+    - path: data/raw/
+      hash: md5
+      md5: 16317c90fd08b6af1a105608e30c4ed4.dir
+      size: 969688
+      nfiles: 3
+    - path: data_import.py
+      hash: md5
+      md5: 6d2158cdfe09bb4d2e3948caa83f10de
+      size: 3556
+    outs:
+    - path: data/processed_data/
+      hash: md5
+      md5: bf5209ef76cad8586f17a71822babe30.dir
+      size: 279474
+      nfiles: 2
+  feature_engineering:
+    cmd: uv run feature_engineering.py
+    deps:
+    - path: data/processed_data/
+      hash: md5
+      md5: bf5209ef76cad8586f17a71822babe30.dir
+      size: 279474
+      nfiles: 2
+    outs:
+    - path: data/tfidf_processed/
+      hash: md5
+      md5: 1a727be9c8195a4a533ff9c38054f6b9.dir
+      size: 1181239
+      nfiles: 2
+  model_building:
+    cmd: uv run model_building.py
+    deps:
+    - path: data/tfidf_processed/
+      hash: md5
+      md5: 1a727be9c8195a4a533ff9c38054f6b9.dir
+      size: 1181239
+      nfiles: 2
+    - path: params.yaml
+      hash: md5
+      md5: f781a4f20dccc9e7c2527aa0debd6e60
+      size: 206
+    outs:
+    - path: data/models/
+      hash: md5
+      md5: 96933abea389af49e7fda8c2672946b3.dir
+      size: 448592
+      nfiles: 1
+  model_evaluation:
+    cmd: uv run model_evaluation.py
+    deps:
+    - path: data/models/
+      hash: md5
+      md5: 96933abea389af49e7fda8c2672946b3.dir
+      size: 448592
+      nfiles: 1
+    - path: data/tfidf_processed/
+      hash: md5
+      md5: 1a727be9c8195a4a533ff9c38054f6b9.dir
+      size: 1181239
+      nfiles: 2
+    outs:
+    - path: data/metrics/
+      hash: md5
+      md5: 7d5e6d17f5228f188b8e641609d2671c.dir
+      size: 154
+      nfiles: 1
