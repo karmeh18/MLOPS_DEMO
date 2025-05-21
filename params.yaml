@@ -1,0 +1,14 @@
+data_import:
+  test_size: 0.2
+  random_state: 42
+
+data_explorer:
+  leaf_node: 2
+  max_depth: 4
+  min_samples_split: 2
+  n_estimators: 10
+
+model_building:
+  n_estimators: 22
+  random_state: 2
+
